@@ -23,7 +23,7 @@ if DEBUG==True:
     BASE_URL = "http://0.0.0.0:5000/"
 else:
     pass
-BASE_URL = "http://stark-wave-7196.herokuapp.com/"
+BASE_URL = "http://intro23andme.herokuapp.com/"
 CALLBACK_URL = BASE_URL + "23api/callback"
 INTRO_NUM = 1  # number of introductions to send.
 ONEMONTH = 31 * 24 * 60 * 60       #a month worth of seconds
