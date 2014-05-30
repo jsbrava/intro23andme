@@ -17,13 +17,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 CLIENT_ID = os.getenv('CLIENT_ID', "b6736c2125808c87f136100dca6f4c63")
 CLIENT_SECRET = os.getenv('CLIENT_SECRET', "dc197e0b270f7b2d461eda7665a23d43")
 DEBUG = bool(os.environ.get('DEBUG', False)) # should be True on local dev
-DEBUG = False
+DEBUG = True
 if DEBUG==True:
     logging.basicConfig(filename='23andme.log',level=logging.DEBUG)
     BASE_URL = "http://0.0.0.0:5000/"
 else:
-    BASE_URL = "http://stark-wave-7196.herokuapp.com/"
-
+    pass
+BASE_URL = "http://stark-wave-7196.herokuapp.com/"
 CALLBACK_URL = BASE_URL + "23api/callback"
 INTRO_NUM = 1  # number of introductions to send.
 ONEMONTH = 31 * 24 * 60 * 60       #a month worth of seconds
