@@ -1,0 +1,86 @@
+{% extends "bootstrap/base.html" %}
+{% load static from staticfiles %}
+{% load number_helper %}
+{% load bootstrap %}
+
+{% block cta %}
+{% endblock %}
+
+{% block styles %}
+<style type="text/css">
+.form-inline .controls {display:inline; padding-right: 1em}
+.form-inline .control-group {display:inline;}
+.metric {font-size:150%;line-height:30px;}
+.confidence {color: #999;}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function(){
+	$('.describeable').popover({placement: "bottom"});
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div>
+<form method="POST" class="form-inline">
+{% csrf_token %}
+
+{{ couple_form|bootstrap }}
+<input type="submit" value="Submit"/>
+</form>
+</div>
+<div class="row">
+{% for key, trait_list in traits.items %}
+	<div class="span6">
+	<h2>{{ key | title }} </h2>
+	{% for trait in trait_list %}
+		<div class="metric">
+			<h4 class="describeable" data-content="{{ phenotype.0.description | escape}}">{{ trait.0.name | title }}</h4>
+			<p><span class="confidence"> {{ trait.1.0.0 | as_percent | floatformat:"0" }}%</span> {{ trait.1.0.1 }}</p>
+			
+			
+		</div>
+	{% endfor %}
+	</div>
+{% endfor %}
+</div>
+
+<!--
+<div class="row">
+	<div class="span6">
+		<div>
+			<h2>Appearance</h2>
+			<div class="metric">Brown Hair <small class="confidence">75% chance</small></div>
+			<div class="metric">Curly Hair <small class="confidence">50% chance</small></div>
+			<div class="metric">Brown Eyes <small class="confidence">75% chance</small></div>
+			<a class="" href="#">More</a>
+		</div>
+		<div>
+			<h2>Skills and Abilities</h2>
+			<div>
+				 <div class="metric">Above Average Muscle Performance <small class="confidence">75% chance</small></div>
+				 <div class="metric">Average Cognitive Skills <small class="confidence">50% chance</small></div>
+				 <a class="" href="#">More</a>
+			</div>
+		</div>
+	</div>
+	<div class="span6">
+		<div>
+			<h2>Personality</h2>
+				<div class="metric">Warrior <small class="confidence">75% chance</small></div>
+				 <div class="metric">Below Average Empathy <small class="confidence">50% chance</small></div>
+				 <a class="" href="#">More</a>
+		</div>
+		<div>
+			<h2>Conditions and Risks</h2>
+				<div class="metric">Myopia <small class="confidence">25% chance</small></div>
+				<div class="metric">Above Average Cystic Fibrosis Risk <small class="confidence">25% chance</small></div>
+				<a class="" href="#">More</a>
+		</div>
+	</div>
+</div>
+-->
+{% endblock %}

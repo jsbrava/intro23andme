@@ -1,0 +1,49 @@
+@CHARSET "ISO-8859-1";
+	/* "auto" makes the left and right margins center the wrapper */
+	#wrap { 
+		width: 900px; 
+		margin: 0 auto; 
+	}
+	body {
+		background-color: #D4F1FF}
+	h1 {
+    	font-family: Helvetica, Geneva, Arial,
+          SunSans-Regular, sans-serif }
+	.header 
+		{   
+		color:black;   
+		background-color: #FFA500; 
+		width:800px;   height:50px
+		font-family: Helvetica, Geneva, Arial,
+          SunSans-Regular, sans-serif; 
+		}
+	p {
+		width: 800px;
+		color: black;
+		font-family: Helvetica, Geneva, Arial,
+          SunSans-Regular, sans-serif
+          }
+    .textBox{
+
+    	width: 500px;
+    	height: 150px;
+    	color: black;
+    	background-color: #FFFFCC
+    	}
+/* progress bar */
+	#progress {
+	 width: 500px;   
+	 border: 1px solid black;
+	 position: relative;
+	 padding: 3px;
+	}
+	
+	#percent {
+	 position: absolute;   
+	 left: 50%;
+	}
+	#bar {
+	 height: 20px;
+	 background-color: green;
+	 width: 0%;
+	}

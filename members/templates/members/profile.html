@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+ 
+<html lang="en">
+ 
+<head>
+    <meta charset="utf-8" />
+	{% load staticfiles %}
+	<link href="static/members/style.css" rel="stylesheet" type="text/css"/>
+    <title>Profile - message</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<script src="static/members/jquery-1.11.0.js"></script>
+	<script src="static/members/jquery-ui.js"></script>
+	<script src="static/members/profile.js"></script>
+	
+	<!-- link rel="stylesheet" href="/resources/demos/style.css" -->
+	<!-- http://jqueryui.com/progressbar/ -->
+	<!--{{choices.BASE_URL}}relatives-->
+</head>
+ 
+<body>
+<div id="wrap">
+<div class="header" >
+<h1>Send Introductions to 23andMe matches</h1></div>
+
+<p>Select a name from the list of your 23andMe profiles below. There may be only one name.
+Then put the message you would like to send for basic genetic sharing in the text box.
+</p>
+<br>
+<form id="relatives" action="" method="POST">
+{% csrf_token %}
+<div class="container1">
+
+	{% for id, name in choices.profiles.items %}
+		<tr>
+		<input type='radio' name='profile_id' value='{{id}}'> {{name}}
+		</tr>
+	{% endfor %}
+ 
+</div>
+<br>
+<textarea class=textBox >Dear Cousin,
+Through our shared DNA, 23andMe has identified us as relatives. Would you like to compare our genomes? By sharing genomes we can compare our DNA using ancestry features and discover clues about how we are related.</textarea>
+<br>
+<p >Just an example. Personalized to you would be better.</p>
+<br>
+<!--
+<input type='radio' name='send' value='new'> Only New
+<input type='radio' name='send' checked value='resend'> Resend
+<br><br>
+-->
+<input type="submit" value="Send Introductions">
+</form>
+<br>
+<p>'Send Introductions' will send an introduction to everyone who hasn't received one yet. If they've received one, but not responded,
+ then the old introduction will be cancelled and a new introduction will be resent. 23andMe limits how often introductions 
+ can be resent to once a month or so. This app should not be run more than once a month or the match will spend a long time in a cancelled
+ state. Anyone that rejects an introduction won't receive any more.
+</p>
+<h4 id="getProgress"></h4>
+<div id="progress" style="visibility: hidden">
+    <span id="percent">0%</span>
+    <div id="bar"></div>
+</div>
+<p id="explanation"></p>
+</div>
+</body>
+     
+</html>

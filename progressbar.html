@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+  
+<head>
+ 
+
+<style type="text/css">
+.ui-progressbar .ui-progressbar-value {
+    background-image: url(http://bit.ly/13wIQuG);
+}
+</style>
+   
+<title>Result</title>
+    
+   
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+    
+<link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css"/>
+ 
+<script src="jquery-1.11.0.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>   
+<script>
+$(document).ready(function() {
+    
+    $("#progressbar").progressbar({value: 10});
+    
+    var progress = setInterval(function() {
+       
+	var currentVal = $("#progressbar").progressbar("option", "value");
+       
+	var nextVal = currentVal + 1;
+       
+	if (nextVal > 100) {
+           
+		clearInterval(progress);
+       
+	} else {
+
+           $("#progressbar").progressbar({value: nextVal});
+
+       }
+
+    }, 1000);
+});
+</script>
+    
+
+  
+</head>
+  
+<body>
+    
+<h2>Loading...</h2>
+    
+<div id="progressbar"></div>
+  
+</body>
+</html>
