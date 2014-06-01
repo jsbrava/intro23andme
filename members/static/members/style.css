@@ -30,6 +30,7 @@
     	color: black;
     	background-color: #FFFFCC
     	}
+    .container { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll; }
 /* progress bar */
 	#progress {
 	 width: 500px;   

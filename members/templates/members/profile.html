@@ -28,6 +28,7 @@ Then put the message you would like to send for basic genetic sharing in the tex
 <br>
 <form id="relatives" action="" method="POST">
 {% csrf_token %}
+<!-- old radio boxes
 <div class="container1">
 
 	{% for id, name in choices.profiles.items %}
@@ -35,7 +36,12 @@ Then put the message you would like to send for basic genetic sharing in the tex
 		<input type='radio' name='profile_id' value='{{id}}'> {{name}}
 		</tr>
 	{% endfor %}
- 
+</div>
+ -->
+<div class="container">
+	{% for id, name in choices.profiles.items %}
+		<input type='radio' name='profile_id' value='{{id}}'/> {{name}} <br />
+	{% endfor %}
 </div>
 <br>
 <textarea class=textBox >Dear Cousin,

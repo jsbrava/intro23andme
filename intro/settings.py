@@ -13,17 +13,22 @@ import os, logging
 from datetime import timedelta
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-# 23andme settings:
+# 23andme settings for jsbrava:
 CLIENT_ID = os.getenv('CLIENT_ID', "b6736c2125808c87f136100dca6f4c63")
 CLIENT_SECRET = os.getenv('CLIENT_SECRET', "dc197e0b270f7b2d461eda7665a23d43")
+# 23andme settings for jimcs for testing:
+#CLIENT_ID = os.getenv('CLIENT_ID', "1e61eed93ce5ed5b51a787de9f5363cc")
+#CLIENT_SECRET = os.getenv('CLIENT_SECRET', "a577e7fd716aa0c9f30d19d43006f6f7")
+
 DEBUG = bool(os.environ.get('DEBUG', False)) # should be True on local dev
 DEBUG = True
 if DEBUG==True:
     logging.basicConfig(filename='23andme.log',level=logging.DEBUG)
-    BASE_URL = "http://0.0.0.0:5000/"
+    BASE_URL = "http://0.0.0.0:5000/"       # this is heroku foreman default
+    BASE_URL = "http://127.0.0.1:8000/"     # this is django runserver default
 else:
-    pass
-BASE_URL = "http://intro23andme.herokuapp.com/"
+    BASE_URL = "http://intro23andme.herokuapp.com/"
+BASE_URL = "http://intro23andme.herokuapp.com/"      # forces it to heroku
 CALLBACK_URL = BASE_URL + "23api/callback"
 INTRO_NUM = 1  # number of introductions to send.
 ONEMONTH = 31 * 24 * 60 * 60       #a month worth of seconds
