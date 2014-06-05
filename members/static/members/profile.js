@@ -19,7 +19,7 @@ function processRelatives(relativeJSON, status){
 	//alert("selectedRelatives:"+selectedRelatives);
 	// send intros to people with 'null' intro status and not already sharing genomes; should be first timers.
 	
-	for (var index=0;index<relativeJSON.relatives.length; index++){
+	for (var index=0;index<relativeJSON.relatives.length; index++){	
 		if (relativeJSON.relatives[index].share_status != 'Sharing Genomes' && relativeJSON.relatives[index].intro_status != 'Introduction Declined' && typeof(relativeJSON.relatives[index].match_id) == 'string'){
 			//send to everyone except those sharing genomes or declined. Server will send or cancel and resend depending on intro status.
 			postIntro(relativeJSON.relatives[index].match_id);
@@ -32,6 +32,7 @@ function processRelatives(relativeJSON, status){
 			if (relativeJSON.relatives[index].share_status == 'Sharing Genomes') stats['genomes'] += 1;
 			if (relativeJSON.relatives[index].intro_status == 'Introduction Declined') stats['introDeclined'] +=1;
 		}
+		updateProgress()
 	}
 	
 }
@@ -42,6 +43,10 @@ function postIntroResult(data,status){
 	}
 	updateProgress()
 	//$("#getProgress").html("sent " + successCount + " introductions out of a total of " + totalRelatives);
+	
+}
+
+function showStats(){
 	$("#getProgress").html("The selected profile has " + stats['totalRelatives'] + " relatives. <br>" + 
 			"Sharing genomes with " + stats['genomes'] + ". <br>" + 
 			"Public profiles not sharing genomes " + stats['publicProfile'] + ". <br>" + 
@@ -56,6 +61,7 @@ function updateProgress(){
 	var percentDone = Math.round(((replyFromServer)/stats['tryToSend']) * 100);
 	$("#percent").html(percentDone + "%");
 	$("#bar").css('width', percentDone + '%');
+	showStats()
 }
 
 function postIntro(match_id){

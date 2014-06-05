@@ -97,6 +97,9 @@ class OAuthClient(object):
                    #'Content-Type' : 'application/octet-stream'}
                    'Content-Type' : 'text/plain'}
         url = "%s%s" % (BASE_URL, resource)
+        log.debug('_post_resource url: %s body: %s' ,url, body)
+        ###just for debug, comment out the next line!!!
+        #return json.loads('{"introduction": {"status": "sent"}}')
         response = requests.post(
             url,
             headers=headers,
@@ -108,11 +111,11 @@ class OAuthClient(object):
         #log.debug('response.raw: %s' % response.raw)
         #log.debug('response headers: %s' % headers)
         if response.status_code == 200 and response.text != '500 error':
-            log.debug('_post_resource url: %s response: %s .text: %s' ,url, response, response.text)
+            log.debug('_post_resource url: %s response: %s .text: %s body: %s' ,url, response, response.text, body)
             return response.text
         else:
             #response.raise_for_status()
-            log.debug('_post_resource error url: %s response: %s .text: %s' ,url, response, response.text)
+            log.debug('_post_resource error url: %s response: %s .text: %s body: %s' ,url, response, response.text, body)
             return response.text
             
     def get_user(self): 
@@ -122,7 +125,7 @@ class OAuthClient(object):
         return self._get_resource("names/")
     
     def get_relatives(self, profile_id):
-        relatives = 'relatives/' + str(profile_id) + '/?limit=00'
+        relatives = 'relatives/' + str(profile_id) + '/?limit=10'
         return self._get_resource(relatives)
     
     def post_intro(self, profile_id, match_id, intro_text):
@@ -138,33 +141,20 @@ class OAuthClient(object):
         if response["introduction"]["status"] == "rejected" or response["introduction"]["visibility"] == "genome":
             log.debug('post_intro rejected response: %s match_id: %s', response, match_id)
             return False 
-        
+        # make sure the following is set to True!!! 
         if response["can_send"] == True:
             #log.debug('post_intro can send response: %s match_id: %s', response, match_id)
             #return True    #for testing
             response = json.loads(self._post_resource(intro, body))
             if response["introduction"]["status"] == "sent":
                 log.debug('post_intro post sent response: %s match_id: %s', response, match_id)
-                response = self.get_send_status(profile_id, match_id)
+                #response = self.get_send_status(profile_id, match_id)
                 return True
             else:
                 log.debug('post_intro post not sent response: %s match_id: %s', response, match_id)
                 return False
         else:  #let's see if we can cancel and resend an introduction
-
-            if response["introduction"]["status"] != "cancelled" and response["introduction"]["status"] != "accepted": 
-                self.send_cancel(profile_id, match_id)      #cancel then resend the introduction
-                if self.get_send_status(profile_id, match_id)["can_send"] == True:
-                    response = json.loads(self._post_resource(intro, body))
-                    if response["introduction"]["status"] == "sent":
-                        log.debug('post_intro2 post sent response: %s match_id: %s', response, match_id)
-                        return True
-                    else:
-                        log.debug('post_intro2 post not sent response: %s match_id: %s', response, match_id)
-                        return False
-                return False
-            else:
-                return False
+            return False
         
     def get_send_status(self, profile_id, match_id):
         intro = 'introduction/' + str(profile_id) + '/' + str(match_id)
